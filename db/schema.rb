@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_182604) do
+ActiveRecord::Schema.define(version: 2021_09_23_200146) do
 
   create_table "rec_areas", force: :cascade do |t|
     t.string "name"
@@ -29,11 +29,10 @@ ActiveRecord::Schema.define(version: 2021_09_23_182604) do
     t.integer "user_id"
     t.integer "rec_area_id"
     t.string "description"
-    t.string "month"
-    t.string "year"
     t.string "picture"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "date"
   end
 
   create_table "user_favorites", force: :cascade do |t|
