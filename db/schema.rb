@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_200146) do
+ActiveRecord::Schema.define(version: 2021_09_28_023927) do
 
   create_table "rec_areas", force: :cascade do |t|
     t.string "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_09_23_200146) do
     t.integer "user_favorites_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rec_area_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -33,6 +34,10 @@ ActiveRecord::Schema.define(version: 2021_09_23_200146) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "date"
+    t.integer "nature_review"
+    t.integer "amenities_review"
+    t.integer "activities_review"
+    t.integer "family_review"
   end
 
   create_table "user_favorites", force: :cascade do |t|
