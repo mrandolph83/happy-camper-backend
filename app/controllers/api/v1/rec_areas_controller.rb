@@ -4,15 +4,21 @@ class Api::V1::RecAreasController < ApplicationController
   before_action :set_rec_area, only: [:show, :update, :destroy]
 
   def rec_area_search
-    
-    search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas?query=State%20Park&limit=50&offset=0&full=true&state=CO,VA,NC&activity=6,BOATING", headers={accept: 'application/json',
+   
+   
+    keywords = params[:keywords]
+    state_code = params[:stateCode1]
+    activity = params[:activity1]
+
+
+    search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas?query=#{keywords}&limit=50&offset=0&full=true&state=#{state_code}&activity=#{activity}", headers={accept: 'application/json',
     apikey: 'c7e1bfea-aea3-436f-a007-619276d7bc13'})
 
 
 
-    search_call_parsed = JSON.parse(search_call)
-    byebug
-    render json: search_call_parsed
+    search_call_json = JSON.parse(search_call)
+   
+    render json: search_call
 end
 
   # GET /rec_areas/1
