@@ -12,7 +12,7 @@ class Api::V1::RecAreasController < ApplicationController
 
 
     search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas?query=#{keywords}&limit=50&offset=0&full=true&state=#{state_code}&activity=#{activity}", headers={accept: 'application/json',
-    apikey: 'c7e1bfea-aea3-436f-a007-619276d7bc13'})
+    apikey: ENV["KEY"]})
 
 
 
