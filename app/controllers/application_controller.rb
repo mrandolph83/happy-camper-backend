@@ -9,5 +9,91 @@ class ApplicationController < ActionController::API
         def logged_in?
             !!current_user 
         end
-    
+
+      
+        def parse_results(result)
+            id = find_id(result)
+            name = find_name(result)
+            description = find_description(result)
+          
+            # pictures = find_activities(result)
+            # hypotheticals
+            city_state = find_address(result)
+            byebug
+        
+           
+            # activities (array)
+            # url 
+            # pictures
+            
+        end
+
+        def find_id(result)
+           
+            result.each { |key, value| 
+              if key != "RecAreaID"
+              else
+                id = value 
+                return id  
+              end   
+              }      
+        end
+
+        def find_name(result)
+            result.each { |key, value| 
+                if key != "RecAreaName"
+                else 
+                name = value 
+                return name  
+              end   
+              }      
+        end
+
+        def find_description(result)
+            result.each { |key, value| 
+                if key != "RecAreaDescription"
+                else 
+                description = value
+                return description  
+              end   
+              }      
+        end
+
+        # Put everything you find into a "Results Array" after you find or create all of the elements. Then return that data with a .to_json method back
+
+        def find_address(result)
+            result.each { |key, value| 
+            if key != "RECAREAADDRESS" 
+            else 
+               address_items = value[0]
+               city = find_city(address_items)
+               state = find_state(address_items)
+            return "#{city}, #{state}"
+            end
+       }  
+        end
+
+        def find_city(address_items)
+            address_items.each { |key, value| 
+                if key != "City"
+                else 
+                city = value
+                return city  
+              end   
+              }      
+        end 
+
+        def find_state(address_items)
+            address_items.each { |key, value| 
+                if key != "AddressStateCode"
+                else 
+                state = value
+                return state  
+              end   
+              }      
+        end 
+
+        
+        
+              
 end
