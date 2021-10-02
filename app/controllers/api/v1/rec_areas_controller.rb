@@ -12,12 +12,55 @@ class Api::V1::RecAreasController < ApplicationController
 
 
     search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas?query=#{keywords}&limit=50&offset=0&full=true&state=#{state_code}&activity=#{activity}", headers={accept: 'application/json',
+   
     apikey: ENV["KEY"]})
-
-
+    
+    # Add a Find or Create Method here
 
     search_call_json = JSON.parse(search_call)
-   
+    # Down to the values 
+    results_array = search_call_json.values[0]
+    
+    results_array.each do |result|
+      parse_results(result)
+    end
+      
+      
+      
+    #   { |key, value| 
+    #   if key = "RecAreaID"
+    #     id = value 
+
+
+    #   elsif key = "RecAreaName"
+    #     name = value
+    #   elisf key = "RecAreaDescription"
+    #     description = value
+    #   end 
+    #   byebug
+     
+
+    # }
+  
+     
+
+    # result
+    
+
+    # end 
+
+
+
+    
+  
+
+    # def key_value_pair(search_call_json[0])
+    # search_call_json{ |key, value| puts "#{key} #{value}"}
+    # end
+
+    # rendered_data = key_value_pair 
+
+ 
     render json: search_call
 end
 
