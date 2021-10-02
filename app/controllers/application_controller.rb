@@ -16,10 +16,16 @@ class ApplicationController < ActionController::API
             name = find_name(result)
             description = find_description(result)
           
-            # pictures = find_activities(result)
-            # hypotheticals
+            
             city_state = find_address(result)
+            activities = find_activities(result)
+            # pictures = find_activities(result)
             byebug
+            
+        
+            
+         
+            
         
            
             # activities (array)
@@ -59,7 +65,7 @@ class ApplicationController < ActionController::API
               }      
         end
 
-        # Put everything you find into a "Results Array" after you find or create all of the elements. Then return that data with a .to_json method back
+    #  ADDRESS 
 
         def find_address(result)
             result.each { |key, value| 
@@ -93,6 +99,48 @@ class ApplicationController < ActionController::API
               }      
         end 
 
+        # ACTIVITIES
+        def find_activities(result)
+            activity_array = []
+            result.each { |key, value| 
+            if key != "ACTIVITY" 
+            else 
+               activities = value.each {|activity| puts activity 
+               activity.each {|activity_objects, attributes| 
+               if activity_objects != "ActivityName"
+               else 
+               activity_array << attributes
+             end          
+            }       
+               }
+                
+            end
+       }  
+        activities = activity_array.join(', ')
+        return activities
+        end
+
+        # def activity_parse(activity_items)
+           
+        #     activity_items.each { |activity| 
+        #     activity.each {|key, value| 
+        #     if key != "ActivityName"
+        #     else 
+        #     activity_array = []
+        #     activity_array << value 
+            
+        #     end
+            
+        # }
+        # activities = activity_array.each {|activity| puts activity}
+        # return activities
+
+        # } 
+          
+        # end 
+        
+
+           # Put everything you find into a "Results Array" after you find or create all of the elements. Then return that data with a .to_json method back
         
         
               
