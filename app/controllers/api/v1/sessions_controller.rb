@@ -16,9 +16,11 @@ class Api::V1::SessionsController < ApplicationController
     def get_current_user
         
         if logged_in?
-            current_user = User.find(cookies[:current_user_id])
-            byebug
-            render json: UserSerializer.new(current_user)
+            render json: current_user
+            # render json: UserSerializer.new(current_user)
+            # current_user = User.find(cookies[:current_user_id])
+            
+            
            
         else
             render json: {
