@@ -12,26 +12,17 @@ class ApplicationController < ActionController::API
 
       
         def parse_results(result)
+            
             id = find_id(result)
             name = find_name(result)
             description = find_description(result)
-          
-            
             city_state = find_address(result)
+            latitude = find_latitude(result)
+            longitude = find_longitude(result)
+            url = find_url(result)
             activities = find_activities(result)
-            # pictures = find_activities(result)
-            byebug
-            
-        
-            
-         
-            
-        
-           
-            # activities (array)
-            # url 
-            # pictures
-            
+    
+            pictures = find_pictures(result)
         end
 
         def find_id(result)
@@ -80,24 +71,72 @@ class ApplicationController < ActionController::API
         end
 
         def find_city(address_items)
-            address_items.each { |key, value| 
+            address_items.each { |key, city| 
                 if key != "City"
                 else 
-                city = value
+                city
                 return city  
               end   
               }      
         end 
 
         def find_state(address_items)
-            address_items.each { |key, value| 
+            address_items.each { |key, state| 
                 if key != "AddressStateCode"
                 else 
-                state = value
+                state
                 return state  
               end   
               }      
         end 
+
+        # LATITUDE_LONGITUDE
+        def find_latitude(result)
+            result.each { |key, latitude| 
+            if key != "RecAreaLatitude" 
+            else 
+               latitude
+               return latitude
+             end   
+             }      
+       end 
+
+       def find_longitude(result)
+        result.each { |key, longitude| 
+        if key != "RecAreaLongitude" 
+        else 
+           longitude
+           return longitude
+         end   
+         }      
+   end 
+   
+#    URL
+
+   def find_url(result)
+            result.each { |key, value| 
+            if key != "LINK" 
+            else 
+                link = value[0] 
+
+              link.each { |link_key, url| 
+                if link_key != "URL"
+                else           
+                    url 
+                    return url   
+                end  
+            }
+            end 
+        } 
+    end 
+
+
+                
+            
+
+               # LINK, then
+            # URL
+
 
         # ACTIVITIES
         def find_activities(result)
@@ -105,43 +144,39 @@ class ApplicationController < ActionController::API
             result.each { |key, value| 
             if key != "ACTIVITY" 
             else 
-               activities = value.each {|activity| puts activity 
-               activity.each {|activity_objects, attributes| 
-               if activity_objects != "ActivityName"
+               value.each {|activity| 
+               activity.each {|activity_keys, attributes| 
+               if activity_keys != "ActivityName"
                else 
                activity_array << attributes
              end          
             }       
-               }
-                
+               }        
             end
        }  
         activities = activity_array.join(', ')
         return activities
         end
 
-        # def activity_parse(activity_items)
-           
-        #     activity_items.each { |activity| 
-        #     activity.each {|key, value| 
-        #     if key != "ActivityName"
-        #     else 
-        #     activity_array = []
-        #     activity_array << value 
-            
-        #     end
-            
-        # }
-        # activities = activity_array.each {|activity| puts activity}
-        # return activities
+        # PICTURES
 
-        # } 
-          
-        # end 
-        
-
-           # Put everything you find into a "Results Array" after you find or create all of the elements. Then return that data with a .to_json method back
-        
-        
-              
+        def find_pictures(result)
+          picture_array = []
+            result.each { |key, value| 
+                if key != "MEDIA"
+                else 
+                    value.each {|picture|  
+                    picture.each {|picture_keys, attributes| 
+                    if picture_keys != "URL"
+                    else 
+                    picture_array << attributes
+                  end          
+                 }       
+                    }
+                     
+                 end
+            }  
+             
+             return picture_array
+             end    
 end
