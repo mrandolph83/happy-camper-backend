@@ -21,7 +21,7 @@ class Api::V1::RecAreasController < ApplicationController
     # Down to the values 
     results_array = search_call_json.values[0]
    
-    get_results(results_array)
+    returned_results = get_results(results_array)
       
       
       
@@ -59,7 +59,7 @@ class Api::V1::RecAreasController < ApplicationController
     # rendered_data = key_value_pair 
 
  
-    render json: search_call
+    render json: returned_results
 end
 
   # GET /rec_areas/1
