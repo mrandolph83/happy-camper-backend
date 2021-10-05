@@ -42,7 +42,7 @@ class ApplicationController < ActionController::API
                 rec_area.description = description 
                 rec_area.city_state = city_state
                 rec_area.latitude = latitude
-                rec_area.longitude
+                rec_area.longitude = longitude
                 rec_area.url = url 
                 rec_area.activities = activities 
                 rec_area.images = images 
@@ -190,14 +190,17 @@ class ApplicationController < ActionController::API
         # images
 
         def find_images(result)
+          
           picture_array = []
             result.each { |key, value| 
                 if key != "MEDIA"
                 else 
                     value.each {|picture|  
+              
                     picture.each {|picture_keys, attributes| 
                     if picture_keys != "URL"
                     else 
+                       
                     picture_array << attributes
                   end          
                  }       
@@ -206,8 +209,7 @@ class ApplicationController < ActionController::API
                  end
             }  
              
-             final_array = picture_array.split
-             byebug
-             final_array
+           picture_array.join(", ")
+           
              end    
 end
