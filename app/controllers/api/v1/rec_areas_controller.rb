@@ -22,44 +22,9 @@ class Api::V1::RecAreasController < ApplicationController
     results_array = search_call_json.values[0]
    
     returned_results = get_results(results_array)
-      
-      
-      
-    #   { |key, value| 
-    #   if key = "RecAreaID"
-    #     id = value 
 
-
-    #   elsif key = "RecAreaName"
-    #     name = value
-    #   elisf key = "RecAreaDescription"
-    #     description = value
-    #   end 
-    #   byebug
-     
-
-    # }
-  
-     
-
-    # result
-    
-
-    # end 
-
-
-
-    
-  
-
-    # def key_value_pair(search_call_json[0])
-    # search_call_json{ |key, value| puts "#{key} #{value}"}
-    # end
-
-    # rendered_data = key_value_pair 
-
- 
-    render json: returned_results
+    rec_area_json = RecAreaSerializer.new(returned_results).serializable_hash.to_json
+    render json: rec_area_json
 end
 
   # GET /rec_areas/1
