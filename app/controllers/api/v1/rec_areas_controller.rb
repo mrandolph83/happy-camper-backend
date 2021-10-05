@@ -20,10 +20,8 @@ class Api::V1::RecAreasController < ApplicationController
     search_call_json = JSON.parse(search_call)
     # Down to the values 
     results_array = search_call_json.values[0]
-    
-    results_array.each do |result|
-      parse_results(result)
-    end
+   
+    get_results(results_array)
       
       
       

@@ -10,6 +10,10 @@ class ApplicationController < ActionController::API
             !!current_user 
         end
 
+
+        def get_results(results_array)
+           results_array.map {|result| parse_results(result)}         
+        end
       
         def parse_results(result)
             
@@ -21,9 +25,34 @@ class ApplicationController < ActionController::API
             longitude = find_longitude(result)
             url = find_url(result)
             activities = find_activities(result)
-    
-            pictures = find_pictures(result)
+            images = find_images(result) 
+          
+            find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
         end
+
+        def find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
+            
+            if RecArea.exists?(id)
+                rec_area = RecArea.find_by(id)
+
+              else
+                rec_area = RecArea.new
+                rec_area.id = id.to_i
+                rec_area.name = name
+                rec_area.description = description 
+                rec_area.city_state = city_state
+                rec_area.latitude = latitude
+                rec_area.longitude
+                rec_area.url = url 
+                rec_area.activities = activities 
+                rec_area.images = images 
+                rec_area.save!
+             end
+             rec_area
+             
+        end
+
+        
 
         def find_id(result)
            
@@ -158,9 +187,9 @@ class ApplicationController < ActionController::API
         return activities
         end
 
-        # PICTURES
+        # images
 
-        def find_pictures(result)
+        def find_images(result)
           picture_array = []
             result.each { |key, value| 
                 if key != "MEDIA"
@@ -177,6 +206,8 @@ class ApplicationController < ActionController::API
                  end
             }  
              
-             return picture_array
+             final_array = picture_array.split
+             byebug
+             final_array
              end    
 end
