@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
+    byebug
     if @user.save
       render json: @user, status: :created, location: @user
     else
@@ -49,6 +49,6 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password_digest, :name, :user_favorites_id)
+      params.require(:user).permit(:username, :password, :name)
     end
 end
