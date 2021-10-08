@@ -19,9 +19,13 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    byebug
+ 
+
+   
     if @user.save
-      render json: @user, status: :created, location: @user
+         
+      session[:user_id] = @user.id
+      render json: UserSerializer.new(@user), status: :ok
     else
       render json: @user.errors, status: :unprocessable_entity
     end
