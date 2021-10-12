@@ -5,7 +5,7 @@ class Api::V1::RecAreasController < ApplicationController
 
   def rec_area_search
    
-   
+    
     keywords = params[:keywords]
     state_code = params[:stateCode1]
     activity = params[:activity1]
