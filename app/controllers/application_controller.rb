@@ -1,9 +1,7 @@
 class ApplicationController < ActionController::API
  include ::ActionController::Cookies  
-        def current_user
-            
+        def current_user      
             User.find_by(id: session[:user_id])
-    
         end 
 
         def logged_in?
@@ -16,7 +14,6 @@ class ApplicationController < ActionController::API
         end
       
         def parse_results(result)
-            
             id = find_id(result)
             name = find_name(result)
             description = find_description(result)
@@ -26,7 +23,6 @@ class ApplicationController < ActionController::API
             url = find_url(result)
             activities = find_activities(result)
             images = find_images(result) 
-          
             find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
         end
 
@@ -34,7 +30,6 @@ class ApplicationController < ActionController::API
             
             if RecArea.exists?(id)
                 rec_area = RecArea.find_by(id)
-
               else
                 rec_area = RecArea.new
                 rec_area.id = id.to_i
@@ -49,7 +44,6 @@ class ApplicationController < ActionController::API
                 rec_area.save!
              end
              rec_area
-             
         end
 
         
@@ -159,14 +153,6 @@ class ApplicationController < ActionController::API
         } 
     end 
 
-
-                
-            
-
-               # LINK, then
-            # URL
-
-
         # ACTIVITIES
         def find_activities(result)
             activity_array = []
@@ -196,7 +182,6 @@ class ApplicationController < ActionController::API
                 if key != "MEDIA"
                 else 
                     value.each {|picture|  
-              
                     picture.each {|picture_keys, attributes| 
                     if picture_keys != "URL"
                     else 
@@ -204,8 +189,7 @@ class ApplicationController < ActionController::API
                     picture_array << attributes
                   end          
                  }       
-                    }
-                     
+                    }      
                  end
             }  
              
