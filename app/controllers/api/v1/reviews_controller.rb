@@ -4,9 +4,16 @@ class Api::V1::ReviewsController < ApplicationController
 
   # GET /reviews
   def index
-    @reviews = Review.all
+    if logged_in?
+    @reviews = current_user.reviews
 
-    render json: @reviews
+    render json: ReviewSerializer.new(@reviews)
+
+    else 
+      render json: {
+        error: "YOu must be logged in to see your reviews"
+      }
+    end
   end
 
   # GET /reviews/1
