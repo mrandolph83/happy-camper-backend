@@ -11,7 +11,7 @@ class Api::V1::ReviewsController < ApplicationController
 
     else 
       render json: {
-        error: "YOu must be logged in to see your reviews"
+        error: "You must be logged in to see your reviews"
       }
     end
   end
