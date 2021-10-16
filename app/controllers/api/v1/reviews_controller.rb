@@ -1,6 +1,6 @@
 class Api::V1::ReviewsController < ApplicationController
 
-  before_action :set_review, only: [:show, :destroy]
+  before_action :set_review, only: [:show]
 
   # GET /reviews
   def index
@@ -45,7 +45,18 @@ class Api::V1::ReviewsController < ApplicationController
 
   # DELETE /reviews/1
   def destroy
-    @review.destroy
+    delete_id = params[:id].to_i
+    @review = Review.find(delete_id)
+    
+    if @review.destroy
+      render json:  { data: "Review deleted successfully" }, status: :ok
+    else
+      error_resp = {
+        error: "Review not deleted"
+      }
+      render json: error_resp, status: :unprocessable_entity
+    
+  end
   end
 
   private
