@@ -1,6 +1,6 @@
 class Api::V1::ReviewsController < ApplicationController
 
-  before_action :set_review, only: [:show, :update, :destroy]
+  before_action :set_review, only: [:show, :destroy]
 
   # GET /reviews
   def index
@@ -26,7 +26,7 @@ class Api::V1::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     
     if @review.save
-      render json: ReviewSerializer.new(@review), status: :ok
+      render json: ReviewSerializer.new(@review), status: :created
     else
       render json: @review.errors, status: :unprocessable_entity
     end
@@ -34,8 +34,10 @@ class Api::V1::ReviewsController < ApplicationController
 
   # PATCH/PUT /reviews/1
   def update
+    review_id = params[:id].to_i
+    @review = Review.find(review_id)
     if @review.update(review_params)
-      render json: @review
+      render json: ReviewSerializer.new(@review), status: :ok
     else
       render json: @review.errors, status: :unprocessable_entity
     end
