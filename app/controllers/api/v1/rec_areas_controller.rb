@@ -4,26 +4,25 @@ class Api::V1::RecAreasController < ApplicationController
   before_action :set_rec_area, only: [:show, :update, :destroy]
 
   def rec_area_search
-   
-    
     keywords = params[:keywords]
     state_code = params[:stateCode1]
     activity = params[:activity1]
 
-
-    search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas?query=#{keywords}&limit=50&offset=0&full=true&state=#{state_code}&activity=#{activity}", headers={accept: 'application/json',
-   
-    apikey: ENV["KEY"]})
+    search_call = RestClient.get("https://ridb.recreation.gov/api/v1/recareas", headers={accept: 'application/json',
     
-    # Add a Find or Create Method here
+
+
+    apikey: ENV["KEY"]})
+
 
     search_call_json = JSON.parse(search_call)
-    # Down to the values 
+    
     results_array = search_call_json.values[0]
    
     returned_results = get_results(results_array)
-
+  
     rec_area_json = RecAreaSerializer.new(returned_results).serializable_hash.to_json
+
     render json: rec_area_json
 end
 
@@ -32,16 +31,7 @@ end
     render json: @rec_area
   end
 
-  # POST /rec_areas
-  def create
-    @rec_area = RecArea.new(rec_area_params)
 
-    if @rec_area.save
-      render json: @rec_area, status: :created, location: @rec_area
-    else
-      render json: @rec_area.errors, status: :unprocessable_entity
-    end
-  end
 
   # # PATCH/PUT /rec_areas/1
   # def update

@@ -30,11 +30,7 @@ class ApplicationController < ActionController::API
         end
 
         def find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
-            
-            if RecArea.exists?(id)
                 rec_area = RecArea.find_by(id)
-              else
-                rec_area = RecArea.new
                 rec_area.id = id.to_i
                 rec_area.name = name
                 rec_area.description = description 
@@ -45,7 +41,7 @@ class ApplicationController < ActionController::API
                 rec_area.activities = activities 
                 rec_area.images = images 
                 rec_area.save!
-             end
+           
              rec_area
         end
 
@@ -144,6 +140,7 @@ class ApplicationController < ActionController::API
             if key != "LINK" 
             else 
                 link = value[0] 
+                byebug
 
               link.each { |link_key, url| 
                 if link_key != "URL"
