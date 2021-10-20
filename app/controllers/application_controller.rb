@@ -23,37 +23,40 @@ class ApplicationController < ActionController::API
            
            description = find_description(result)
            
-           city = find_city(result)
+          #  city = find_city(result)
 
+          #  state = find_state(result)
+         
            latitude = find_latitude(result)
            longitude = find_longitude(result)
-           url = find_url(result)
-           activities = find_activities(result)
-           images = find_images(result) 
-           find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
-       end
-
-       def find_or_create_rec_area(id, name, description, city_state, latitude, longitude, url, activities, images)
+          #  url = find_url(result) unless url = nil || ""
            
-           if RecArea.exists?(id)
-               rec_area = RecArea.find_by(id)
-             else
-               rec_area = RecArea.new
-               rec_area.id = id.to_i
-               rec_area.name = name
-               rec_area.description = description 
-               rec_area.city = city
-               rec_area.state = state
-               rec_area.latitude = latitude
-               rec_area.longitude = longitude
-               rec_area.url = url 
-               rec_area.activities = activities 
-               rec_area.images = images 
-               rec_area.save!
-            end
-            rec_area
+           activities = find_activities(result)
+          
+           images = find_images(result) 
+           find_or_create_rec_area(id, name, description, latitude, longitude, activities, images)
        end
 
+       def find_or_create_rec_area(id, name, description, latitude, longitude, activities, images)
+            
+        if RecArea.exists?(id)
+            rec_area = RecArea.find_by(id)
+          else
+            rec_area = RecArea.new
+            rec_area.id = id.to_i
+            rec_area.name = name
+            rec_area.description = description 
+            # rec_area.city = ""
+            # rec_area.state = ""
+            rec_area.latitude = latitude
+            rec_area.longitude = longitude
+            # rec_area.url = url
+            rec_area.activities = activities 
+            rec_area.images = images 
+            rec_area.save!
+         end
+         rec_area
+    end
        
 
        def find_id(result)
@@ -90,25 +93,49 @@ class ApplicationController < ActionController::API
    #  ADDRESS 
 
 
-       def find_city(result)
-           result.each { |key, city| 
-               if key != "City"
-               else 
-               city
-               return city  
-             end   
-             }      
-       end 
 
-       def find_state(address_items)
-           address_items.each { |key, state| 
-               if key != "AddressStateCode"
-               else 
-               state
-               return state  
-             end   
-             }      
-       end 
+
+
+# def find_city(result)
+#   result.each { |key, value| 
+#   if key != "RECAREAADDRESS" 
+#   else 
+#       link = value[0] 
+     
+
+#     link.each { |link_key, city| 
+#       if link_key != "City"
+#       elsif           
+#           city 
+#           return city 
+#       else
+#         return ""  
+#       end  
+#   }
+#   end 
+# } 
+# end 
+
+
+# def find_state(result)
+#   result.each { |key, value| 
+#   if key != "RECAREAADDRESS" 
+#   else 
+#       link = value[0] 
+
+#     link.each { |link_key, state| 
+#       if link_key != "AddressStateCode"
+#       elsif           
+#           state 
+#           return state   
+#       else 
+#         return ""
+#       end  
+#   }
+#   end 
+# } 
+# end 
+
 
        # LATITUDE_LONGITUDE
        def find_latitude(result)
@@ -133,22 +160,7 @@ class ApplicationController < ActionController::API
   
 #    URL
 
-  def find_url(result)
-           result.each { |key, value| 
-           if key != "LINK" 
-           else 
-               link = value[0] 
-
-             link.each { |link_key, url| 
-               if link_key != "URL"
-               else           
-                   url 
-                   return url   
-               end  
-           }
-           end 
-       } 
-   end 
+ 
 
        # ACTIVITIES
        def find_activities(result)
