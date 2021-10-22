@@ -3,7 +3,9 @@ class Api::V1::UserFavoritesController < ApplicationController
     
     # POST /user_user_favorites
     def create
+
       @user_favorite = UserFavorite.new(user_favorite_params)
+      byebug
   
       if @user_favorite.save
         render json: @user_favorite, status: :created, location: @user_favorite

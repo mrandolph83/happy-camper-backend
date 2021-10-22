@@ -1,6 +1,7 @@
 class Api::V1::ReviewsController < ApplicationController
 
   before_action :set_review, only: [:show]
+  before_action :update_params, only: [:create]
 
   # GET /reviews
   def index
@@ -23,6 +24,9 @@ class Api::V1::ReviewsController < ApplicationController
 
   # POST /reviews
   def create
+    
+ 
+
     @review = Review.new(review_params)
     
     if @review.save
@@ -68,6 +72,15 @@ class Api::V1::ReviewsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def review_params
       params.require(:review).permit(:user_id, :rec_area_id, :description, :date, :nature_review, :amenities_review, :activities_review, :family_review, :picture)
+    end
+
+    def update_params
+      params[:user_id] = params[:user_id].to_i
+      params[:rec_area_id]  = params[:rec_area_id].to_i
+      params[:amenities_review]  = params[:amenities_review].to_i
+      params[:nature_review]  = params[:nature_review].to_i
+      params[:activities_review]  = params[:activities_review].to_i
+      params[:family_review]  = params[:family_review].to_i
     end
 end
 
