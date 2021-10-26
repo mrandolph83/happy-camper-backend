@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_012249) do
+ActiveRecord::Schema.define(version: 2021_10_26_021940) do
 
   create_table "rec_areas", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_012249) do
     t.integer "amenities_review"
     t.integer "activities_review"
     t.integer "family_review"
+    t.string "reviewer_name"
   end
 
   create_table "user_favorites", force: :cascade do |t|
